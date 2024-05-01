@@ -59,7 +59,9 @@ do
 done < $metin-harf_istatistik.txt
 
 #Tüm metin için toplam göz kırpma sayısı:
-awk -F ';' '{topla += $2} END {print "'$metin' için Toplam Göz Kırpma Sayısı: " topla}' $metin-toplam_goz_kirpma.txt
+topla=$(awk -F ';' '{topla += $2} END {print topla}' "$metin-toplam_goz_kirpma.txt")
+echo "$metin için Toplam Göz Kırpma Sayısı: $topla"
+echo "Toplam;$topla" >> "$metin-toplam_goz_kirpma.txt"
 
 endtime=$(date +"%s")
 math=$((endtime-starttime))
