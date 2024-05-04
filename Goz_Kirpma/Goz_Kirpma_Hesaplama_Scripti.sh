@@ -3,7 +3,10 @@
 # Metin dosyasının adı
 echo "Analiz Edilecek TXT Metin Dosyası Adını Giriniz:"
 
-read metin
+read ilk_metin
+# Dosya ismindeki boşlukları _ ile değiştiriyoruz ve analiz için yeni bir kopyasını oluşturuyoruz:
+metin="${ilk_metin// /_}"
+cp "$ilk_metin" "$metin"
 
 #Başlangıç Zamanı
 starttime=$(date +"%s")
@@ -65,4 +68,4 @@ echo "Toplam;$topla" >> "$metin-toplam_goz_kirpma.txt"
 
 endtime=$(date +"%s")
 math=$((endtime-starttime))
-echo "Analiz için çalıştığımız script $math saniye sürdü"
+echo "Analiz için çalıştırdığımız script $math saniye sürdü"
