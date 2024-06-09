@@ -3,10 +3,48 @@
 # Metin dosyasının adı
 echo "Analiz Edilecek TXT Metin Dosyası Adını Giriniz:"
 
-#Analiz edilecek dosyayı okuyoruz:
-read METIN_DOSYASI
+#Başlangıç Zamanı
+starttime=$(date +"%s")
+
+read metin
+METIN_DOSYASI=$(echo $metin | sed 's/ /_/g')
+cp "$metin" "$METIN_DOSYASI"
 
 
+##########Bölüm-01##########
+#Türkçeye özgü harfleri ingilizce harflere çevirmek için:
+harfler=$(cat <<EOF
+ı;i
+ğ;g
+ü;u
+ş;s
+ö;o
+ç;c
+I;i
+İ;i
+Ç;C
+Ş;S
+Ü;U
+Ğ;G
+Ö;O
+â;a
+Â;A
+EOF
+)
+while IFS=";" read turkce eng; do
+    sed -i 's/'$turkce'/'$eng'/g' $METIN_DOSYASI
+done <<< $harfler
+
+#Tüm büyük harfleri küçük harflere çeviriyoruz
+sed -i 's/.*/\L&/' $METIN_DOSYASI
+
+
+##########Bölüm-02##########
+#Alfabedeki harfler haricindeki tüm karakterleri kaldırır:
+sed -i 's/[^a-z ]//g' $METIN_DOSYASI
+
+
+##########Bölüm-03##########
 # İkili harf analizi
 starttime1=$(date +"%s")
 
