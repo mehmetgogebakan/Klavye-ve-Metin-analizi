@@ -7,7 +7,9 @@ echo "Analiz Edilecek TXT Metin Dosyası Adını Giriniz:"
 starttime=$(date +"%s")
 
 read metin
-METIN_DOSYASI=$(echo $metin | sed 's/ /_/g')
+
+#Dosyayı analiz edeceğimiz bir kopyasını oluşturuyoruz: 
+METIN_DOSYASI=$(echo $metin | sed 's/ /_/g' | sed 's/\(.\{4\}$\)/_Analiz\1/')
 cp "$metin" "$METIN_DOSYASI"
 
 
